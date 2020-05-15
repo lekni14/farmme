@@ -1,0 +1,33 @@
+.is_invalid .input-group-text {
+  border-color: #fb6340;
+}
+.navbar-menu {
+  /* margin-top: 80px; */
+}
+.navbar {
+  padding: 0.5rem 1rem;
+}
+.navbar-top .form-inline .btn i {
+  width: 25px;
+  height: 25px;
+  padding: 5px;
+}
+.navbar-search button{
+    border-radius: 2rem;
+    /* border: 2px solid; */
+}
+.MuiOutlinedInput-input {
+  padding: 13.5px 10px !important;;
+}
+.MuiInputBase-input{
+  height: 1.3em !important;
+}
+.dropdown-menu-bar {
+  min-width: 16rem;
+}
+.input-group-prepend .is-invalid{
+  border: 1px solid #dc3545;
+}
+.was-validated .form-control:invalid, .form-control.is-invalid, .was-validated .custom-select:invalid, .custom-select.is-invalid .input-group-text.is-invalid{
+  border-color: #fb6340;
+}
