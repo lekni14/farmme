@@ -1,38 +1,71 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useContext } from "react";
 import { connect } from 'react-redux';
 import { Modal, Button } from "react-bootstrap";
 import { Row, Col, Card, CardHeader, CardBody } from "reactstrap";
 
 import AddEP from '../../pages/auth/AddEP'
+import LoginEP from '../../pages/auth/LoginEP'
 import Router from 'next/router'
 
-import actions from '../../actions';
+import { userActions } from '../../actions';
 import { PF } from '../../utils/constants'
 import initialize from '../../utils/initialize';
 
+import * as yup from "yup";
 
-
+const loginSchema = yup.object().shape({
+    email: yup.string()
+        .email('Invalid email')
+        .required("This field is required."),
+    password: yup.string()
+        .min(2, 'Too Short!')
+        .max(50, 'Too Long!')
+        .required("This field is required.")
+});
+const Btnf = (props) => {
+    function handleSetForm() {
+        props.handleForm(1)
+    }
+    return (
+        <Button className="btn-block" onClick={handleSetForm} variant="danger">Email & Password</Button>
+    )
+}
 const MdMain = (props) => {
 
-    const [errorMsg, setErrorMsg] = useState('')
+    // edit 27/5/63
+    // const { addep, loginep } = useContext(StoreContext);
+    const [activeStep, setActiveStep] = React.useState(0);
+    function getStepContent(stepIndex) {
+        console.log(stepIndex)
+        switch (stepIndex) {
+            case 0:
+                return <Btnf handleForm={setActiveStep} />;
+            case 1:
+                return <AddEP onSubmit={handleAddEPSubmit} />;
+            case 2:
+                return <LoginEP onSubmit={handleLoginSubmit} />;
+            default:
+                return "Unknown stepIndex";
+        }
+    }
+    // edit 27/5/63
 
     // const handleHide = () => setShow(false);
     const handleShow = () => setShow(true);
     const [show, setShow] = useState(false);
-    const [form, setForm] = useState(false);
     const [login, setLogin] = useState(false);
-    const handleForm = () => setForm(true);
     // const handleSetLogin = () => setLogin(true);
-    const handleUnsetLogin = () => setLogin(false);
     function handleSetLogin() {
-        setLogin(true);
-        setForm(true);
-        setShow(true)
+        setShow(true);
+        setActiveStep(2);
+    }
+    function handleSetAddep() {
+        setShow(true);
+        setActiveStep(1);
     }
     function handleHide() {
         setShow(false);
-        setForm(false);
-        setLogin(false);
+        setActiveStep(0);
     }
     async function handleAddEPSubmit(data) {
         const { email, password, firstname, lastname } = data;
@@ -44,28 +77,20 @@ const MdMain = (props) => {
                 lastname: lastname,
                 pf: PF
             }
-            props.register(data,'register')
+            props.registerEP(data)
         }
     }
     async function handleLoginSubmit(data) {
-        console.log(e)
         console.log(props)
-        // event.preventDefault()
-
-        // props.registerEP(e)
-        //     const { email, password, firstname, lastname } = this.state;
-        //     if (email && password) {
-        //       const data = {
-        //         email: email,
-        //         password: password,
-        //         pf: PF,
-        //         firstname: firstname,
-        //         lastname: lastname
-        //       }
-        //       this.props.registerEP(data)
-        //       this.setState({ validated: true });
-        //     }
-        //   }
+        const { email, password } = data;
+        if (email && password) {
+            const data = {
+                email: email,
+                password: password,
+                pf: PF
+            }
+            props.login(data)
+        }
     }
     return (
 
@@ -79,7 +104,7 @@ const MdMain = (props) => {
                             <Card className="bg-secondary border-0">
                                 <CardHeader className="bg-transparent pb-5">
                                     <div className="text-muted text-center mt-2 mb-3">
-                                        <h2>สร้างฟาร์มของคุณ</h2>
+                                        <h2>สนใจสร้างฟาร์มของคุณ</h2>
                                     </div>
                                     <div className="btn-wrapper text-center">
 
@@ -89,15 +114,16 @@ const MdMain = (props) => {
                                     <div className="text-center text-muted mb-2">
                                         <small>sign up to see more</small>
                                     </div>
-                                    {errorMsg && <p className="error">{errorMsg}</p>}
-                                    {form ? <AddEP isLogin={login} onSubmit={login ? handleLoginSubmit : handleAddEPSubmit} /> : null}
+                                    {getStepContent(activeStep)}
+                                    {/* {errorMsg && <p className="error">{errorMsg}</p>} */}
+                                    {/* {form ? <AddEP isLogin={login} onSubmit={login ? handleLoginSubmit : handleAddEPSubmit} /> : null} */}
 
                                     <div className="mb-2 mt-1 text-center">
-                                        {form ?
+                                        {/* {form ?
                                             <><small className="my-2 d-block">or</small></> :
                                             <Button onClick={handleForm} className="btn-block" variant="danger">Email & Password</Button>
 
-                                        }
+                                        } */}
 
                                         <Button className="ml-0 btn-block" variant="primary">Continue with Facebook</Button>
                                         <Button className="ml-0 btn-block" variant="light">Continue with Google</Button>
@@ -114,22 +140,23 @@ const MdMain = (props) => {
                                             </a></small>
                                     </div>
                                     <div className="text-center text-muted pt-5">
-                                        {!login ? (
-                                            <small>Already a member? <a
+                                        {activeStep == 2 ? (
+                                            <small>Not on Pinterest yet?<a
                                                 className=""
                                                 href="#"
-                                                onClick={handleSetLogin}
-                                            > Log in
-                                                    {/* Forgot password?</small> */}
+                                                onClick={handleSetAddep}
+                                            > Sign-up
+                                                {/* Forgot password?</small> */}
                                             </a>
                                             </small>
+
                                         ) : (
-                                                <small>Not on Pinterest yet?<a
+                                                <small>ล็อกอินเข้าใช้งานด้วยบัญชี Farmme ของคุณ <a
                                                     className=""
                                                     href="#"
-                                                    onClick={handleUnsetLogin}
-                                                > Sign-up
-                                                    {/* Forgot password?</small> */}
+                                                    onClick={handleSetLogin}
+                                                > เข้าสู่ระบบ
+                                                {/* Forgot password?</small> */}
                                                 </a>
                                                 </small>
                                             )}
@@ -145,15 +172,24 @@ const MdMain = (props) => {
         </>
     );
 }
-// }
-MdMain.getInitialProps = async ctx => {
-    return initialize(ctx);
+
+MdMain.getInitialProps = async ({ isServer }) => {
+    initialize(isServer);
+    // return { isServer }
 }
-export default connect(
-    state => state,
-    actions
-)(MdMain);
 
+const mapDispatchToProps = dispatch => {
+    return {
+    }
+}
+const actionCreators = {
+    login: userActions.login,
+    // logout: userActions.logout,
+    registerEP: userActions.registerEP,
+    getUser: userActions.getUser
+};
 
-// const connectedLoginPage = connect(mapState, actionCreators)(Signin);
-// export { connectedLoginPage as Signin }
+export default connect(mapDispatchToProps, actionCreators)(MdMain)
+
+// const connectedLoginPage = connect(mapState, actionCreators)(MdMain);
+// export { connectedLoginPage as MdMain }

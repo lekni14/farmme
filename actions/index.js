@@ -12,9 +12,6 @@ export default {
   ...authActions,
 };*/
 
-export default {
-  ...authActions,
-}
-// export * from './user.actions'
-// export * from './alert.actions'
+export * from './user.actions'
+export * from './alert.actions'
 // export * from './alert.actions'

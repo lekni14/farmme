@@ -1,188 +1,138 @@
-import { Form, InputGroup, FormGroup } from "react-bootstrap";
-import { Formik } from "formik";
+import React, { Fragment } from "react";
+import { Formik, Form } from 'formik';
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+import { TextField, FormControl, InputLabel, Select } from "@material-ui/core";
 import * as yup from "yup";
-
-
-const addEPSchema = yup.object().shape({
-    firstname: yup.string()
-        .min(2, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required("This field is required."),
-    lastname: yup.string()
-        .min(2, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required("This field is required."),
-    email: yup.string()
-        .email('Invalid email')
-        .required("This field is required."),
-    password: yup.string()
-        .min(2, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required("This field is required.")
+const useStyles = makeStyles(theme => ({
+  root: {
+    margin: "-1rem 0 2rem 0",
+    padding: "0 7rem",
+    [theme.breakpoints.down("xs")]: {
+      padding: "0"
+    },
+    [theme.breakpoints.down("md")]: {
+      padding: "0"
+    },
+    marginTop: "auto"
+  },
+  textField: {
+    width: "100%",
+    [theme.breakpoints.down("xs")]: {
+      width: "100%"
+    },
+    margin: "0.25rem 0 0.2rem 0",
+    backgroundColor: theme.palette.common.white,
+  },
+  errorMessage: {
+    color: "red",
+    fontSize: "0.9rem",
+    margin: "0 0 0.2rem 0"
+  }
+}));
+const addSchema = yup.object().shape({
+  firstname: yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required("กรุณาระบุชื่อ."),
+  lastname: yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required("กรุณาระบุนามสกุล."),
+  email: yup.string()
+    .email('Invalid email')
+    .required("กรุณาระบุนามอีเมล์."),
+  password: yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required("กรุณาระบุรหัสผ่าน.")
 });
-const AddEPForm = ({
-    handleSubmit,
-    handleChange,
-    handleBlur,
-    values,
-    touched,
-    isValid,
-    errors,
-}) => (
-        <Form noValidate onSubmit={handleSubmit} role="form">
-            <div className="my-2 text-center">
-                <FormGroup className="mb-2">
-                    <InputGroup>
-                        <InputGroup.Prepend>
-                            <InputGroup.Text id="inputGroupPrepend" className={!!errors.firstname ? 'is-invalid' : ''}><i className="ni ni-single-02" /></InputGroup.Text>
-                        </InputGroup.Prepend>
-                        <Form.Control.Feedback type="invalid">
-                            {errors.firstname}
-                        </Form.Control.Feedback>
-                        {/* {addEPForm.errors.firstname} */}
-                        <Form.Control
-                            type="text"
-                            name="firstname"
-                            placeholder="Firstname"
-                            value={values.firstname}
-                            onChange={handleChange}
-                            // isValid={touched.firstname && !errors.firstname}
-                            isInvalid={!!errors.firstname}
-                        />
-                    </InputGroup>
-                </FormGroup>
-                <FormGroup className="mb-2">
-                    <InputGroup>
-                        <InputGroup.Prepend >
-                            <InputGroup.Text id="inputGroupPrepend" className={!!errors.lastname ? 'is-invalid' : ''}><i className="ni ni-single-02" /></InputGroup.Text>
-                        </InputGroup.Prepend>
-                        <Form.Control.Feedback type="invalid">
-                            Please choose a Lastname.
-                                                             </Form.Control.Feedback>
-                        <Form.Control
-                            type="text"
-                            name="lastname"
-                            placeholder="Lastname"
-                            value={values.lastname}
-                            onChange={handleChange}
-                            // isValid={touched.lastname && !errors.lastname}
-                            isInvalid={!!errors.lastname}
-                        />
-                    </InputGroup>
-                </FormGroup>
-                <FormGroup className="mb-2">
-                    <InputGroup>
-                        <InputGroup.Prepend>
-                            <InputGroup.Text id="inputGroupPrepend" className={!!errors.email ? 'is-invalid' : ''}><i className="ni ni-email-83"></i></InputGroup.Text>
-                        </InputGroup.Prepend>
-                        <Form.Control.Feedback type="invalid">
-                            Please choose a Email.
-                        </Form.Control.Feedback>
-                        <Form.Control
-                            type="text"
-                            name="email"
-                            placeholder="Email"
-                            aria-describedby="inputGroupPrepend"
-                            value={values.email}
-                            onChange={handleChange}
-                            // isValid={touched.email && !errors.email}
-                            isInvalid={!!errors.email}
-                        />
-                    </InputGroup>
-                </FormGroup>
-                <FormGroup className="mb-2">
-                    <InputGroup >
-                        <InputGroup.Prepend>
-                            <InputGroup.Text id="Password" className={!!errors.password ? 'is-invalid' : ''}>
-                                <i className="ni ni-lock-circle-open" />
-                            </InputGroup.Text>
-                        </InputGroup.Prepend>
-                        <Form.Control.Feedback type="invalid">
-                            Please choose a password.
-                                                             </Form.Control.Feedback>
-                        <Form.Control
-                            type="password"
-                            name="password"
-                            placeholder="Password"
-                            aria-describedby="password"
-                            onChange={handleChange}
-                            isInvalid={!!errors.password}
-                        />
-                    </InputGroup>
-                </FormGroup>
-            </div>
-            <button type="submit" className="btn btn-block btn-danger">สมัครสมาชิก</button>
-        </Form>
-    )
 
-const LoginEPForm = ({
-    handleSubmit,
-    handleChange,
-    handleBlur,
-    values,
-    touched,
-    isValid,
-    errors,
-}) => (
-        <Form noValidate onSubmit={handleSubmit} role="form">
-            <div className="my-2 text-center">
-                <FormGroup className="mb-2">
-                    <InputGroup>
-                        <InputGroup.Prepend>
-                            <InputGroup.Text id="inputGroupPrepend" className={!!errors.email ? 'is-invalid' : ''}><i className="ni ni-email-83"></i></InputGroup.Text>
-                        </InputGroup.Prepend>
-                        <Form.Control.Feedback type="invalid">
-                            Please choose a Email.
-                            </Form.Control.Feedback>
-                        <Form.Control
-                            type="text"
-                            name="email"
-                            placeholder="Email"
-                            aria-describedby="inputGroupPrepend"
-                            value={values.email}
-                            onChange={handleChange}
-                            validate={validateEmail}
-                            // isValid={touched.email && !errors.email}
-                            isInvalid={!!errors.email}
-                        />
-                    </InputGroup>
-                </FormGroup>
-                <FormGroup className="mb-2">
-                    <InputGroup >
-                        <InputGroup.Prepend>
-                            <InputGroup.Text id="Password" className={!!errors.password ? 'is-invalid' : ''}>
-                                <i className="ni ni-lock-circle-open" />
-                            </InputGroup.Text>
-                        </InputGroup.Prepend>
-                        <Form.Control.Feedback type="invalid">
-                            Please choose a password.
-                                                                 </Form.Control.Feedback>
-                        <Form.Control
-                            type="password"
-                            name="password"
-                            placeholder="Password"
-                            aria-describedby="password"
-                            onChange={handleChange}
-                            isInvalid={!!errors.password}
-                        />
-                    </InputGroup>
-                </FormGroup>
-            </div>
-            <button type="submit" className="btn btn-block btn-danger">เข้าสู่ระบบ</button>
-        </Form>
-    )
+export default function AddEP(props) {
+  // console.log(Props)
+  const { onSubmit } = props
+  const classes = useStyles();
+  return (
+    
+    <Formik
+      initialValues={{ email: '', password: '', firstname: '', lastname: '' }}
+      validationSchema={addSchema}
+      onSubmit={onSubmit}
+    >
+      {({ errors, touched, handleChange, values }) => (
+      <>
+        <Form noValidate role="form">
+          <Grid container direction="row" justify="center" alignItems="center" >
+            <Grid item md={12} xs={12}>
+              <TextField
+                id="FirstName"
+                label="ชื่อจริง"
+                name="firstname"
+                className={classes.textField}
+                margin="normal"
+                variant="outlined"
+                error={!!errors.firstname}
+                onChange={handleChange}
+              />
+              {errors.firstname && touched.firstname ? (
+                  <p className={classes.errorMessage}>{ errors.firstname }</p>
+             ) : null}
+              </Grid>
+          <Grid item md={12} xs={12}>
+            <TextField
+              id="LastName"
+              label="นามสกุล"
+              name="lastname"
+              className={classes.textField}
+              margin="normal"
+              variant="outlined" error={!!errors.lastname}
+              onChange={handleChange}
+              />
+              {errors.lastname && touched.lastname ? (
+                  <p className={classes.errorMessage}>{ errors.lastname }</p>
+             ) : null}
+          </Grid>
+          <Grid item md={12} xs={12}>
+            <TextField
+              id="Email"
+              label="อีเมล์"
+              name="email"
+              className={classes.textField}
+              margin="normal"
+              variant="outlined" 
+              error={!!errors.email}
+              onChange={handleChange}
+              />
+              {errors.email && touched.email ? (
+                  <p className={classes.errorMessage}>{ errors.email }</p>
+             ) : null}
+          </Grid>
+          <Grid item md={12} xs={12}>
+            <TextField
+              id="Password"
+              label="รหัสผ่าน"
+              type="password"
+              name="password"
+              className={classes.textField}
+              margin="normal"
+              variant="outlined" 
+              error={!!errors.firstname}
+              onChange={handleChange}
+              />
+              {errors.password && touched.password ? (
+                  <p className={classes.errorMessage}>{ errors.password }</p>
+             ) : null}
+          </Grid>
+          
+            </Grid>
+            <button type="submit" className="btn btn-block btn-danger mt-2">เริ่มต้นใช้งาน</button>
+          </Form>
+          <small className="my-2 d-block text-center">or</small>
+         </>
+          
+        )
+      }
+    </Formik > 
 
-const AddEP = (props) => {
-    const { isLogin, onSubmit } = props
-    return (
-        <>
-            {isLogin ? <Formik component={LoginEPForm} initialValues={{ email: '', password: ''}} validationSchema={addEPSchema}
-                onSubmit={onSubmit} /> : (
-                    <Formik component={AddEPForm} initialValues={{ email: '', password: '',firstname: '',lastname: '' }} validationSchema={addEPSchema}
-                        onSubmit={onSubmit} />
-                )}
-        </>
-    )
-
+  );
 }
-export default AddEP

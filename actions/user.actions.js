@@ -6,7 +6,8 @@ import { alertActions } from './'
 export const userActions = {
     registerEP,
     getUser,
-    logout
+    logout,
+    login
 }
 function logout(token) {
     console.log(token)
@@ -32,7 +33,8 @@ function registerEP(data) {
                 },
                 error => {
                     dispatch(failure(error.toString()))
-                    dispatch(error(error.toString()))
+                    // dispatch(alertActions.error(error.toString()))
+                    // dispatch(error())
                 }
             )
     }

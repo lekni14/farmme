@@ -1,18 +1,21 @@
-import Link from 'next/link';
+// import Link from 'next/link';
 import Head from 'next/head';
 import { connect } from 'react-redux';
-import actions from '../actions';
+// import actions from '../actions';
 import AdminNavbarTop from './Navbars/AdminNavbarTop'
-
+// export default ({ component: C, props: cProps, ...rest }) =>
+//   <Route {...rest} render={props => (
+//     cProps.isAuthenticated === true ? <HomeLayout><C {...props} {...cProps} /></HomeLayout> : <Login {...props} {...cProps}/>
+//     )} />;
 const Layout = ({ children, title, isAuthenticated}) => (
-  <div>
+  <>
     <Head>
       <title>{ title }</title>
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       {/* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css" /> */}
     </Head>
-    <AdminNavbarTop isAuthenticated={isAuthenticated}></AdminNavbarTop>
+    <AdminNavbarTop></AdminNavbarTop>
     <div className="tabs is-centered">
       <ul>
         {/* <Link href="/"><a>Home</a></Link>
@@ -26,7 +29,7 @@ const Layout = ({ children, title, isAuthenticated}) => (
     <div className="has-text-centered">
       { children }
     </div>
-  </div>
+  </>
 );
 
 // const mapStateToProps = (state) => (
@@ -44,4 +47,5 @@ function mapState (state) {
 // const connectedLayout = connect(mapState)(Layout);
 // export { connectedLayout as Layout }
 
-export default connect(mapState, actions)(Layout);
+// export default connect(mapState, actions)(Layout);
+export default Layout
