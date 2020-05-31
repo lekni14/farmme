@@ -36,7 +36,6 @@ const MdMain = (props) => {
     // const { addep, loginep } = useContext(StoreContext);
     const [activeStep, setActiveStep] = React.useState(0);
     function getStepContent(stepIndex) {
-        console.log(stepIndex)
         switch (stepIndex) {
             case 0:
                 return <Btnf handleForm={setActiveStep} />;
@@ -53,7 +52,6 @@ const MdMain = (props) => {
     // const handleHide = () => setShow(false);
     const handleShow = () => setShow(true);
     const [show, setShow] = useState(false);
-    const [login, setLogin] = useState(false);
     // const handleSetLogin = () => setLogin(true);
     function handleSetLogin() {
         setShow(true);
@@ -79,6 +77,7 @@ const MdMain = (props) => {
             }
             props.registerEP(data)
         }
+        setShow(false);
     }
     async function handleLoginSubmit(data) {
         console.log(props)
@@ -91,6 +90,7 @@ const MdMain = (props) => {
             }
             props.login(data)
         }
+        setShow(false);
     }
     return (
 

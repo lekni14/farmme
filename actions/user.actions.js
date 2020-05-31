@@ -50,9 +50,10 @@ function login(data) {
         userService.login(data)
             .then(
                 response => {
+                    console.log(response)
                     if (response.status === 200) {
-                        dispatch(success(response.data.token))
                         dispatch(getUser(response.data.token))
+                        dispatch(success(response.data.token))                        
                     } else {
                         dispatch(failure(response.msg))
                         dispatch(alertActions.error('ไม่สามารถเข้าสู่ระบบได้ กรุณาตรวจสอบอีเมลหรือรหัสผ่านของท่าน'))
@@ -75,6 +76,7 @@ function getUser(token) {
         dispatch(request())
         userService.getUser(token)
             .then(res => {
+                console.log(res)
                 if (res.status === 200) {
                     dispatch(success(res.data.data))
                 }

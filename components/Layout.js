@@ -7,37 +7,33 @@ import AdminNavbarTop from './Navbars/AdminNavbarTop'
 //   <Route {...rest} render={props => (
 //     cProps.isAuthenticated === true ? <HomeLayout><C {...props} {...cProps} /></HomeLayout> : <Login {...props} {...cProps}/>
 //     )} />;
-const Layout = ({ children, title, isAuthenticated}) => (
-  <>
-    <Head>
-      <title>{ title }</title>
-      <meta charSet="utf-8" />
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      {/* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css" /> */}
-    </Head>
-    <AdminNavbarTop></AdminNavbarTop>
-    <div className="tabs is-centered">
-      <ul>
-        {/* <Link href="/"><a>Home</a></Link>
-        {!isAuthenticated && <Link href="/signin"><a>Sign In</a></Link>}
-        {!isAuthenticated && <Link href="/signup"><a>Sign Up</a></Link>}
-        {isAuthenticated && <Link href="/users"><a>Profile</a></Link>}
-        {isAuthenticated && <li onClick={deauthenticate}><a>Sign Out</a></li>} */}
-      </ul>
-    </div>
+// const Index = props => {
+const Layout = ({ children, title, authenticated }) => {
+  return (
+    <>
+      <Head>
+        <title>{title}</title>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        {/* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css" /> */}
+      </Head>
+      <AdminNavbarTop authenticated={authenticated}></AdminNavbarTop>
+      <div className="tabs is-centered">
+      </div>
 
-    <div className="has-text-centered">
-      { children }
-    </div>
-  </>
-);
+      <div className="has-text-centered">
+        {children}
+      </div>
+    </>
+  );
+}
 
 // const mapStateToProps = (state) => (
 //   // console.log(state)
 //   {isAuthenticated: !!state.authentication.token}
 // );
-function mapState (state) {
-  return {isAuthenticated: !!state.authentication.token}
+function mapState(state) {
+  return { isAuthenticated: !!state.authentication.token }
 }
 
 

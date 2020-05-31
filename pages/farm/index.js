@@ -15,7 +15,7 @@ class Index extends React.Component {
     static async getInitialProps(ctx) {
         initialize(ctx);
     }
-
+    
     async componentDidMount() {
         console.log(this.props)
         // await this.props.getUser(

@@ -1,17 +1,17 @@
 import { userConstants } from '../utils/constants';
-
-// const initialState = {
-//   token: null,
-//   user: null,
-// };
-import { getCookie, setCookie, removeCookie } from '../utils/cookie';
+import { getCookie } from '../utils/cookie';
 
 
 let initialState;
 if (typeof localStorage !== "undefined") {
-  const authCookie = getCookie('auth');
+  const authCookie = getCookie('token');
   if (authCookie) {
-    initialState = JSON.parse(decodeURIComponent(authCookie));
+    initialState = {
+      token: authCookie,
+      user: getCookie('user'),
+      isLoggedIn: false,
+    };
+    console.log(initialState)
   } else {
     initialState = {
       token: null,
@@ -24,9 +24,12 @@ if (typeof localStorage !== "undefined") {
     isLoggedIn: false,
     user: {}
   };
+  console.log(initialState)
 }
 
 export function authentication(state = initialState, action) {
+  console.log(action.type)
+  console.log(action.data)
   switch (action.type) {
     case userConstants.LOGIN_REQUEST:
       return {
@@ -36,7 +39,7 @@ export function authentication(state = initialState, action) {
       }
     case userConstants.LOGIN_SUCCESS:
       return {
-        isLoggedIn: false,
+        isLoggedIn: true,
         token: action.data,
         isShowLogin: false
       }
@@ -44,6 +47,7 @@ export function authentication(state = initialState, action) {
       return {
       }
     case userConstants.LOGOUT:
+
       return {
         isLoggedIn: false,
         isShowLogin: false

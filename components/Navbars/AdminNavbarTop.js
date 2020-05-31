@@ -14,8 +14,7 @@ import {
 import MdLogin from '../../pages/auth/mdMain'
 
 function AdminNavbarTop(props) {
-    const {isAuthenticated} = props
-    console.log(isAuthenticated)
+    const { isLoggedIn, user } = props.authenticated
     return (
         <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
             <Container>
@@ -26,7 +25,7 @@ function AdminNavbarTop(props) {
                 </Link>
                 {/* <Nav className="align-items-center d-none d-md-flex" navbar> */}
                     <Nav className="align-items-center d-none d-md-flex" navbar>
-                        {!isAuthenticated ? (
+                        {!isLoggedIn ? (
                             <Form className="form-inline my-2 my-lg-0">
                                 {/* <Link href="/auth/regiter">
                                     <Button color="primary" className="my-2 my-sm-0">เริ่มต้นใช้งาน</Button>
@@ -61,7 +60,7 @@ function AdminNavbarTop(props) {
                                                         src="https://demos.creative-tim.com/argon-dashboard-react/static/media/team-4-800x800.23007132.jpg"
                                                     />
                                                 </span>
-                                                <span className="ml-2 d-none d-lg-block"><span className="text-default">Jane Pearson</span><small className="text-muted d-block">Administrator</small></span>
+                                                <span className="ml-2 d-none d-lg-block"><span className="text-default">{user.fullname}</span><small className="text-muted d-block">Administrator</small></span>
 
                                             </Media>
                                         </DropdownToggle>

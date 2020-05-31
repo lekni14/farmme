@@ -2,7 +2,7 @@ import { API_URL } from '../utils/constants'
 // import { authHeader, headers } from '../utils/auth-header'
 import axios from 'axios'
 import Router from 'next/router';
-
+import { getCookie, setCookie, removeCookie } from '../utils/cookie';
 export const userService = {
     login,
     getUser,
@@ -37,7 +37,7 @@ function registerWithEmailPassword(data) {
     // console.log(sessionStorage.getItem('token'))
     const headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+        'Authorization': 'Bearer ' + getCookie('token')
     }
     return axios({
         headers: headers,
@@ -48,6 +48,7 @@ function registerWithEmailPassword(data) {
     }).then(response => {
         console.log(response)
         if (response.status === 200) {
+            setCookie('token',response.data.token);
             // sessionStorage.setItem('token', response.data.token)
             // sessionStorage.setItem('token', response.data.token)
         }
@@ -77,12 +78,17 @@ function registerWithEmailPassword(data) {
     
 }
 function login(data) {
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getCookie('token')
+    }
     return axios({
         headers: headers,
         method: 'POST',
         url: API_URL + '/user/login',
         data: data
     }).then(response => {
+        setCookie('token',response.data.token);
         // sessionStorage.setItem('token', response.data.token)
         return response
     }).catch(error => {
@@ -102,12 +108,32 @@ function getUser(token) {
         withCredentials: false,
         url: API_URL + '/user',
     }).then(response => {
+        console.log(response)
         if (response.status === 200) {
             setCookie('user',JSON.stringify(response.data.data));
             // sessionStorage.setItem('user', JSON.stringify(response.data.data))
         }
         return response
     }).catch(error => {
-        console.log(error)
+        const status = null
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+          status = error.response.status
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+          status = error.request.status
+        } else {
+          // Something happened in setting up the request that triggered an Error
+        //   console.log('Error', error.message);
+        }
+        // console.log(error.config);
+        return { status: status, msg: "Email or password is invalid" }
     })
 }
