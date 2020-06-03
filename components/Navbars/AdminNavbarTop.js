@@ -1,4 +1,6 @@
 import Link from 'next/Link'
+import {connect} from "react-redux";
+
 import {
     DropdownMenu,
     DropdownItem,
@@ -11,6 +13,7 @@ import {
     Container,
     Media
 } from "reactstrap";
+
 import MdLogin from '../../pages/auth/mdMain'
 
 function AdminNavbarTop(props) {
@@ -79,4 +82,4 @@ function AdminNavbarTop(props) {
         </Navbar>
     )
 }
-export default AdminNavbarTop
+export default connect(state => state)(AdminNavbarTop)

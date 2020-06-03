@@ -25,7 +25,6 @@ const Index = props => {
     }
 
   }
-  console.log(props)
   const { isLoggedIn, user } = props;
   const authenticated = { isLoggedIn, user }
   return (

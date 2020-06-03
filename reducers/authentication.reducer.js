@@ -8,10 +8,9 @@ if (typeof localStorage !== "undefined") {
   if (authCookie) {
     initialState = {
       token: authCookie,
-      user: getCookie('user'),
-      isLoggedIn: false,
+      user: getCookie('user') !== undefined ? JSON.parse(getCookie('user')) : {},
+      isLoggedIn: true,
     };
-    console.log(initialState)
   } else {
     initialState = {
       token: null,
@@ -28,7 +27,7 @@ if (typeof localStorage !== "undefined") {
 }
 
 export function authentication(state = initialState, action) {
-  console.log(action.type)
+  console.log(action)
   console.log(action.data)
   switch (action.type) {
     case userConstants.LOGIN_REQUEST:
@@ -85,6 +84,7 @@ export function authentication(state = initialState, action) {
         user: action.data
       }
     default:
+      console.log(state)
       return state
   }
   // console.log(action.type)
