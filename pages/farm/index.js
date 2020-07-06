@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Layout from '../../components/Layout';
-import Fab from '@material-ui/core/Fab';
+
 // import AddIcon from '@material-ui/icons/Add';
-import AddIcon from '@material-ui/icons/Add';
+
 // import { Container, Row, Col, Card, Media } from "reactstrap";
 import { Container, Card } from 'react-bootstrap'
+import Modalcreate from './create/modalcreate';
 // import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,14 +38,10 @@ const Farm = props => {
                 <Card>
                     <Card.Header><h3 className="card-title">ฟาร์มของฉัน</h3></Card.Header>
 
-                    <Card.Body>
+                    <Card.Body className="pb-1">
                         {/* <Card.Title>Card Title</Card.Title> */}
-                        <Fab  variant="extended"
-                            color="primary"
-                            aria-label="add" className="mt--6">
-                            <AddIcon />
-                            สร้างฟาร์ม
-                        </Fab>                      
+                        <Modalcreate/>
+                                           
                     </Card.Body>
                 </Card>
                 {/* <Row>

@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@hookform/resolvers": "0.0.5",
     "@material-ui/core": "^4.10.0",
     "@material-ui/icons": "^4.9.1",
     "axios": "^0.18.0",
@@ -28,10 +29,11 @@
     "react-datetime": "2.16.3",
     "react-dom": "^16.13.1",
     "react-google-maps": "9.4.5",
-    "react-hook-form": "^5.7.2",
+    "react-hook-form": "^6.0.0",
     "react-redux": "^7.2.0",
     "react-router-dom": "4.3.1",
     "react-scripts": "^3.4.1",
+    "react-thai-address": "^1.0.2",
     "reactstrap": "7.1.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",

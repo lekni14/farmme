@@ -3,7 +3,7 @@
 }
 
 .navbar {
-  padding: 0.5rem 1rem;
+  /* padding: 0.5rem 1rem; */
 }
 .navbar-top .form-inline .btn i {
   width: 25px;
@@ -28,4 +28,13 @@
 }
 .was-validated .form-control:invalid, .form-control.is-invalid, .was-validated .custom-select:invalid, .custom-select.is-invalid .input-group-text.is-invalid{
   border-color: #fb6340;
+}
+.btn-primary.focus, .btn-primary:focus {
+  color: #fff;
+  background-color: #55ae5a;
+  border-color: #55ae5a;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+.md-create-farm{
+  min-height: 330px;
 }
